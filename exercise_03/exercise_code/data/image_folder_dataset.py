@@ -80,7 +80,7 @@ class ImageFolderDataset(Dataset):
         # Return the length of the dataset (number of images)                  #
         ########################################################################
 
-        pass
+        length = len(self.images)
 
         ########################################################################
         #                           END OF YOUR CODE                           #
@@ -120,9 +120,13 @@ class ImageFolderDataset(Dataset):
         # Hint 4: the labels and images are already prepared and stored in     #
         #  self.labels and self.images. DO NOT call self.make_dataset() again! #    
         ########################################################################
-   
+        uniqueLabels = np.sort(np.unique(self.labels))
+        labelTransformInt = {x : i for i,x in enumerate(uniqueLabels)}
 
-        pass
+        data_dict = {
+            'image' : self.transform(self.load_image_as_numpy(self.images[index])),
+            'label' : labelTransformInt[self.labels[index]]
+        }
 
         ########################################################################
         #                           END OF YOUR CODE                           #

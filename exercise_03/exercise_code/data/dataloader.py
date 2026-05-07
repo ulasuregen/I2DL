@@ -44,8 +44,22 @@ class DataLoader:
         #     in section 1 of the notebook.                                    #
         ########################################################################
         
+        if self.shuffle:
+            index_iterator = iter(np.random.permutation(len(self.dataset))) 
+        else:
+            index_iterator = iter(range(len(self.dataset))) 
+        
+        batch = {'data': []}
 
-        pass
+        for i in index_iterator:
+            batch['data'].append(self.dataset[i]['data'])
+            if len(batch['data']) == self.batch_size:
+                yield {key : np.array(val) for key, val in batch.items()}
+                batch = {'data': []}
+        
+        if not self.drop_last:
+            yield {key : np.array(val) for key, val in batch.items()}
+            
 
         ########################################################################
         #                           END OF YOUR CODE                           #
@@ -61,7 +75,9 @@ class DataLoader:
         ########################################################################
         
 
-        pass
+        length = len(self.dataset) // self.batch_size 
+        if not self.drop_last:
+            length += len(self.dataset) % self.batch_size != 0
 
         ########################################################################
         #                           END OF YOUR CODE                           #

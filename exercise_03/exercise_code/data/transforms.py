@@ -35,7 +35,8 @@ class RescaleTransform:
         #       Don't change the image in-place (directly in the memory),      # 
         #       but return a copy with ret_image                               #                                      
         ########################################################################
-        
+        t = (image - self._data_min) / (self._data_max - self._data_min)
+        ret_image = self.min + t * (self.max - self.min) 
 
         pass
 
@@ -63,10 +64,8 @@ def compute_image_mean_and_std(images):
     # and not [1, C], [C, 1] or anything else. Use print(mean.shape) to    #
     # test yourself.                                                       #
     ########################################################################
-    
-
-    pass
-
+    mean = np.mean(images, axis = (0,1,2))
+    std = np.std(images, axis = (0,1,2))
     ########################################################################
     #                           END OF YOUR CODE                           #
     ########################################################################
@@ -99,7 +98,7 @@ class NormalizeTransform:
         #   - divide by standard deviation                                     #
         ########################################################################
 
-        pass
+        images = (images - self.mean) / self.std
 
         ########################################################################
         #                           END OF YOUR CODE                           #
