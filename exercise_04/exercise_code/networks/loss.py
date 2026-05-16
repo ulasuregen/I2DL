@@ -118,8 +118,7 @@ class BCE(Loss):
         #                                                                      #
         ########################################################################
 
-
-        pass
+        result = -(y_truth * np.log(y_out) + (1-y_truth) * np.log(1 - y_out))
 
         ########################################################################
         #                           END OF YOUR CODE                           #
@@ -151,9 +150,8 @@ class BCE(Loss):
         #   Don't forget to divide by N, which is the number of samples in     #
         #   the batch. It is crucial for the magnitude of the gradient.        #
         ########################################################################
-
-
-        pass
+    
+        gradient = 1/len(y_out) * ((1- y_truth) * (1 / (1 - y_out)) - y_truth * (1 / y_out))
 
         ########################################################################
         #                           END OF YOUR CODE                           #

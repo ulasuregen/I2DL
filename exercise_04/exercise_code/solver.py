@@ -103,8 +103,11 @@ class Solver(object):
         #   backward.                                                          #
         ########################################################################
 
-
-        pass
+        y_out = model.forward(X_train)
+        lossback = loss_func.backward(y_out, y_train)
+        model_back = model.backward(lossback)
+        opt.step(model_back)
+        
 
         ########################################################################
         #                           END OF YOUR CODE                           #

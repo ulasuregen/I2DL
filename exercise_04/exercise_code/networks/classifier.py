@@ -64,9 +64,10 @@ class Classifier(Network):
         #       The sigmoid is applied to the result of the affine step.       #
         ########################################################################
 
+        y = np.matmul(X,self.W)
+        z = self.sigmoid(y)
 
-        pass
-
+        self.cache = [X,y]
         ########################################################################
         #                           END OF YOUR CODE                           #
         ########################################################################
@@ -102,9 +103,10 @@ class Classifier(Network):
         # Hint 3: The argument "dout" stands for the upstream gradeint to this #
         # layer.                                                               #
         ########################################################################
+        
+        sigmodY = self.sigmoid(self.cache[1]) * (1- self.sigmoid(self.cache[1]))
 
-
-        pass
+        dW = np.matmul(self.cache[0].T, dout * sigmodY)
 
         ########################################################################
         #                           END OF YOUR CODE                           #
@@ -126,8 +128,7 @@ class Classifier(Network):
         # Note: The sigmoid() function operates element-wise.                  #
         ########################################################################
 
-
-        pass
+        out = 1 / (1 + np.exp(-x))
 
         ########################################################################
         #                           END OF YOUR CODE                           #
